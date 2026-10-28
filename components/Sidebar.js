@@ -38,7 +38,15 @@ const groups = [
     ],
   },
   { label: "Area", href: "/area", icon: "pin" },
-  { label: "Reports", href: "/reports", icon: "list" },
+  {
+    label: "Reports", icon: "list", children: [
+      { href: "/reports", label: "Overview" },
+      { href: "/reports/students", label: "Student Register" },
+      { href: "/reports/fees-due", label: "Fees Due" },
+      { href: "/reports/collection", label: "Collection" },
+      { href: "/reports/cancelled", label: "Cancelled & Refund" },
+    ],
+  },
   { label: "Permission", href: "/permission", icon: "shield" },
   { label: "Custom List", href: "/custom", icon: "list" },
 ];
