@@ -1,0 +1,7 @@
+node_modules
+.next
+out
+.env
+.DS_Store
+# local database (auto-created & seeded on first run)
+data/*.json
