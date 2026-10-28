@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { stateList, citiesOf } from "@/lib/geo";
 import { Field, Section, Upload } from "@/components/FormBits";
 import Icon from "@/components/Icon";
+import { intakeLabel, isJuly } from "@/lib/intake";
 import { addStudent } from "@/lib/actions";
 
 const CATS = ["General", "OBC", "SC", "ST", "EWS"];
@@ -153,7 +154,7 @@ export default function StudentForm({ universities, sessions }) {
               <Field label="Session" required>
                 <select className="input" value={sessionId} onChange={(e) => setSessionId(e.target.value)}>
                   <option value="">-- Select Session --</option>
-                  {sessions.map((s) => <option key={s.id} value={s.id}>{s.name} ({s.type === "summer" ? "Summer ☀" : "Winter ❄"})</option>)}
+                  {sessions.map((s) => <option key={s.id} value={s.id}>{s.name} ({intakeLabel(s.type)})</option>)}
                 </select>
               </Field>
               <Field label="Program / Branch" required hint="(for this university + session)">
@@ -178,8 +179,8 @@ export default function StudentForm({ universities, sessions }) {
 
             {selectedSession && (
               <div className="mt-4">
-                <span className={`badge ${selectedSession.type === "summer" ? "bg-emerald-50 text-emerald-700" : "bg-sky-50 text-sky-700"}`}>
-                  Admission type: {selectedSession.type === "summer" ? "☀ Summer" : "❄ Winter"} (from session)
+                <span className={`badge ${isJuly(selectedSession.type) ? "bg-emerald-50 text-emerald-700" : "bg-sky-50 text-sky-700"}`}>
+                  Intake: {intakeLabel(selectedSession.type)} — {selectedSession.name}
                 </span>
               </div>
             )}

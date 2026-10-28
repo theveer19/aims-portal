@@ -1,5 +1,6 @@
 "use client";
 import { Suspense, useEffect, useState } from "react";
+import { intakeLabel, isJuly } from "@/lib/intake";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Icon from "@/components/Icon";
@@ -85,8 +86,8 @@ function Results() {
                     <td className="text-slate-600">{s.program}<div className="text-xs text-slate-400">{s.university}</div></td>
                     <td className="text-slate-600">{s.session}</td>
                     <td>
-                      <span className={`badge ${s.admissionType === "summer" ? "bg-emerald-50 text-emerald-700" : "bg-sky-50 text-sky-700"}`}>
-                        {s.admissionType === "summer" ? "☀ Summer" : "❄ Winter"}
+                      <span className={`badge ${isJuly(s.admissionType) ? "bg-emerald-50 text-emerald-700" : "bg-sky-50 text-sky-700"}`}>
+                        {(isJuly(s.admissionType) ? "☀ " : "❄ ") + intakeLabel(s.admissionType)}
                       </span>
                     </td>
                     <td>

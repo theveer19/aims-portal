@@ -1,21 +1,14 @@
 import PageHeader from "@/components/PageHeader";
-import DataTable, { Badge } from "@/components/DataTable";
+import SessionsManager from "@/components/SessionsManager";
 import { getSessions } from "@/lib/queries";
 
 export default function Sessions() {
   const sessions = getSessions();
-  const columns = [
-    { key: "id", label: "#", render: (_, i) => i + 1 },
-    { key: "name", label: "Session", render: (r) => <span className="font-medium text-ink">{r.name}</span> },
-    { key: "type", label: "Type", render: (r) => (
-      <Badge tone={r.type === "summer" ? "green" : "sky"}>{r.type === "summer" ? "☀ Summer" : "❄ Winter"}</Badge>
-    ) },
-  ];
   return (
     <div className="mx-auto max-w-3xl">
       <PageHeader crumb="Dashboard · University · Session" title="Session Master"
-        desc="Two sessions each year — Summer and Winter admissions." />
-      <DataTable columns={columns} rows={sessions} />
+        desc="Two intakes each year — January and July. Add a session as intake + year (e.g. July 2025)." />
+      <SessionsManager sessions={sessions} />
     </div>
   );
 }

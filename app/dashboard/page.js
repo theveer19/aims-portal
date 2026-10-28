@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { intakeLabel, isJuly } from "@/lib/intake";
 import PageHeader from "@/components/PageHeader";
 import Icon from "@/components/Icon";
 import { counts, getAllStudents } from "@/lib/queries";
@@ -49,7 +50,7 @@ export default function Dashboard() {
                     <td className="font-medium text-ink">{s.name}</td>
                     <td className="text-slate-600">{s.program}</td>
                     <td className="text-slate-600">{s.session}</td>
-                    <td><span className={`badge ${s.admissionType === "summer" ? "bg-emerald-50 text-emerald-700" : "bg-sky-50 text-sky-700"}`}>{s.admissionType === "summer" ? "☀ Summer" : "❄ Winter"}</span></td>
+                    <td><span className={`badge ${isJuly(s.admissionType) ? "bg-emerald-50 text-emerald-700" : "bg-sky-50 text-sky-700"}`}>{(isJuly(s.admissionType) ? "☀ " : "❄ ") + intakeLabel(s.admissionType)}</span></td>
                   </tr>
                 ))}
                 {students.length === 0 && <tr><td colSpan={5} className="py-6 text-center text-slate-400">No students yet.</td></tr>}

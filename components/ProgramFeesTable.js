@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { intakeLabel, isJuly } from "@/lib/intake";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/Icon";
 import { updateProgramFee, deleteProgramFee } from "@/lib/actions";
@@ -26,7 +27,7 @@ export default function ProgramFeesTable({ rows }) {
               <td className="px-5 py-3 font-medium text-ink">{r.university}</td>
               <td className="text-slate-600">{r.program}</td>
               <td className="text-slate-600">{r.session}</td>
-              <td><span className={`badge ${r.type === "summer" ? "bg-emerald-50 text-emerald-700" : "bg-sky-50 text-sky-700"}`}>{r.type === "summer" ? "Summer" : "Winter"}</span></td>
+              <td><span className={`badge ${isJuly(r.type) ? "bg-emerald-50 text-emerald-700" : "bg-sky-50 text-sky-700"}`}>{intakeLabel(r.type)}</span></td>
               <td>
                 {editId === r.id
                   ? <input className="input w-28" inputMode="numeric" value={fee} onChange={(e) => setFee(e.target.value)} />

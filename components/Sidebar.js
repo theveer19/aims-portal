@@ -38,6 +38,7 @@ const groups = [
     ],
   },
   { label: "Area", href: "/area", icon: "pin" },
+  { label: "Reports", href: "/reports", icon: "list" },
   { label: "Permission", href: "/permission", icon: "shield" },
   { label: "Custom List", href: "/custom", icon: "list" },
 ];

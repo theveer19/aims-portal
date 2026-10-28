@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { intakeLabel, isJuly } from "@/lib/intake";
 import { Badge } from "@/components/DataTable";
 import Icon from "@/components/Icon";
 
@@ -49,7 +50,7 @@ export default function StudentsMove({ students, years }) {
                 <td className="font-medium text-ink">{s.name}</td>
                 <td className="text-slate-600">{s.program}</td>
                 <td className="text-slate-600">{s.session}</td>
-                <td><Badge tone={s.admissionType === "summer" ? "green" : "sky"}>{s.admissionType === "summer" ? "☀ Summer" : "❄ Winter"}</Badge></td>
+                <td><Badge tone={isJuly(s.admissionType) ? "green" : "sky"}>{(isJuly(s.admissionType) ? "☀ " : "❄ ") + intakeLabel(s.admissionType)}</Badge></td>
               </tr>
             ))}
             {students.length === 0 && <tr><td colSpan={6} className="px-5 py-8 text-center text-slate-400">No students.</td></tr>}

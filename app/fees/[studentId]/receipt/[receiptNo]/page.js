@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { intakeLabel, isJuly } from "@/lib/intake";
 import { getReceipt, getStudent } from "@/lib/queries";
 import PrintButton from "@/components/PrintButton";
 
@@ -32,7 +33,7 @@ export default function Receipt({ params }) {
           <KV k="Father's Name" v={student.fatherName || "—"} />
           <KV k="Class" v={`${student.program} (${student.session})`} />
           <KV k="Form No" v={student.formNo} />
-          <KV k="Admission" v={student.admissionType === "summer" ? "Summer" : "Winter"} />
+          <KV k="Admission" v={intakeLabel(student.admissionType)} />
         </div>
 
         <table className="mt-6 w-full border border-slate-300 text-sm">

@@ -36,6 +36,12 @@ sample students). To reset the data, stop the app and delete `data/aims.json`
   edit / delete a receipt, and **print a receipt**
 - **Fee Heads** — add / enable / disable / delete (`Fees → Fee Heads`)
 - **Ledger** — all collections in one register (`Fees → Ledger Book`)
+- **Sessions** — two intakes per year, **January / July**; add / edit / delete
+  a session as intake + year, e.g. *July 2025* (`University → Session`)
+- **Cancel & Refund** — cancel an admission (reason + refund amount) from a
+  student's Fees Detail; restore it later (`Students → Cancel`)
+- **Reports** (`Reports`) — admissions, fees collected, pending, cancellations
+  and refunds, with session-wise and university-wise breakdowns; filter by session
 
 ## Tech
 

@@ -1,4 +1,5 @@
 import PageHeader from "@/components/PageHeader";
+import { intakeLabel, isJuly } from "@/lib/intake";
 import DataTable, { Badge } from "@/components/DataTable";
 import { getAllStudents } from "@/lib/queries";
 
@@ -9,7 +10,7 @@ export default function NewArrivals() {
     { key: "name", label: "Name", render: (r) => <span className="font-medium text-ink">{r.name}</span> },
     { key: "program", label: "Program" },
     { key: "session", label: "Session" },
-    { key: "admissionType", label: "Type", render: (r) => <Badge tone={r.admissionType === "summer" ? "green" : "sky"}>{r.admissionType === "summer" ? "☀ Summer" : "❄ Winter"}</Badge> },
+    { key: "admissionType", label: "Type", render: (r) => <Badge tone={isJuly(r.admissionType) ? "green" : "sky"}>{(isJuly(r.admissionType) ? "☀ " : "❄ ") + intakeLabel(r.admissionType)}</Badge> },
     { key: "formNo", label: "Form No", align: "right", render: (r) => <span className="font-mono text-xs text-slate-500">{r.formNo}</span> },
   ];
   return (

@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { intakeLabel, isJuly } from "@/lib/intake";
 import { notFound } from "next/navigation";
 import FeeReceipts from "@/components/FeeReceipts";
+import CancelStudentButton from "@/components/CancelStudentButton";
 import Icon from "@/components/Icon";
 import { getFeeDetail } from "@/lib/queries";
 
@@ -10,18 +12,33 @@ export default function FeesDetail({ params }) {
   const data = getFeeDetail(params.studentId);
   if (!data) return notFound();
   const { student, receipts, summary } = data;
+  const cancelled = student.status === "cancelled";
 
   return (
     <div className="mx-auto max-w-4xl space-y-5">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl font-semibold text-ink">Fees Detail</h1>
+          <h1 className="text-xl font-semibold text-ink">
+            Fees Detail
+            {cancelled && <span className="ml-2 badge bg-rose-50 text-rose-600">Cancelled</span>}
+          </h1>
           <p className="text-sm text-slate-500">
             <Link href="/fees" className="text-brand-600 hover:underline">Fees</Link> → {student.name}
           </p>
         </div>
-        <Link href={`/fees/${student.id}/add`} className="btn-primary"><Icon name="plus" /> Add Fees</Link>
+        <div className="flex items-center gap-2">
+          <CancelStudentButton studentId={student.id} status={student.status} due={summary.dueFees} />
+          {!cancelled && <Link href={`/fees/${student.id}/add`} className="btn-primary"><Icon name="plus" /> Add Fees</Link>}
+        </div>
       </div>
+
+      {cancelled && (
+        <div className="rounded-lg border border-rose-200 bg-rose-50 px-4 py-2 text-sm text-rose-700">
+          Admission cancelled on {student.cancelDate || "—"}
+          {student.cancelReason ? ` · Reason: ${student.cancelReason}` : ""}
+          {student.refundAmount ? ` · Refunded: ₹${Number(student.refundAmount).toLocaleString("en-IN")}` : ""}
+        </div>
+      )}
 
       <div className="card p-6">
         <div className="text-center">
@@ -33,7 +50,7 @@ export default function FeesDetail({ params }) {
           <Row k="Class" v={`${student.program} (${student.session})`} />
           <Row k="Student ID" v={student.id} mono />
           <Row k="Form No" v={student.formNo} mono />
-          <Row k="Admission" v={student.admissionType === "summer" ? "☀ Summer" : "❄ Winter"} />
+          <Row k="Admission" v={(isJuly(student.admissionType) ? "☀ " : "❄ ") + intakeLabel(student.admissionType)} />
           <Row k="Batch Year" v={student.batchYear || "—"} />
           <Row k="Total Fees (₹)" v={fmt(summary.totalFees)} />
           <Row k="Submitted (₹)" v={fmt(summary.totalSubmitted)} />
